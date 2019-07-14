@@ -20,13 +20,13 @@ describe("Sign In Form", () => {
    * Enter Text Into Username Field
    */
   it("Should allow the user to enter their username", () => {
-    const { getByLabelText, getByValue } = setup();
-    const usernameInput = getByLabelText(usernameInput);
+    const { getByLabelText, getByDisplayValue } = setup();
+    const usernameInput = getByLabelText(usernameInputLabel);
 
     // Enter Text Into Userename Field
     fireEvent.change(usernameInput, { target: { value: sampleUsername } });
 
     // Expect text to be displayed
-    expect(getByValue(sampleUsername));
+    expect(getByDisplayValue(sampleUsername));
   });
 });
