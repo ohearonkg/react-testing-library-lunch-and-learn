@@ -10,9 +10,11 @@ This repo will contains lessons, as they are presented, about testing with react
 
 ### Running The App
 
-`yarn dev`
+To run the application, from the root of the project enter the command: `yarn dev`
 
 ### Testing
 
-To run all test suites `yarn test`
-To run in watch mode `yarn test --watch`
+From the root of the proejct,
+
+- To run all test suites `yarn test`
+  -To run in watch mode `yarn test --watch`
