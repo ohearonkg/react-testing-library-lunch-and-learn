@@ -4,8 +4,13 @@ const SignInForm = ({ onSubmitFunction }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  const handleSubmit = e => {
+    e.preventDefault();
+    onSubmitFunction({ username, password });
+  };
+
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <label>
         Username
         <input
@@ -23,6 +28,8 @@ const SignInForm = ({ onSubmitFunction }) => {
           onChange={e => setPassword(e.target.value)}
         />
       </label>
+
+      <input type="submit" value="Submit" />
     </form>
   );
 };
