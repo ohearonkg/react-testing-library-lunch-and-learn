@@ -5,6 +5,9 @@ import SignInForm from "./";
 const usernameInputLabel = /username/i;
 const sampleUsername = "SAMPLEUSERNAME";
 
+const passwordInputLabel = /password/i;
+const samplePassword = "SAMPLEPASSWORD";
+
 const setup = () => render(<SignInForm />);
 
 describe("Sign In Form", () => {
@@ -28,5 +31,27 @@ describe("Sign In Form", () => {
 
     // Expect text to be displayed
     expect(getByDisplayValue(sampleUsername));
+  });
+
+  /**
+   * Finding Password Field
+   */
+  it("Should dispaly the password field", () => {
+    const { getByLabelText } = setup();
+    expect(getByLabelText(passwordInputLabel));
+  });
+
+  /**
+   * Entering Text Into Password Field
+   */
+  it("Should allow the user to enter text into the password field", () => {
+    const { getByLabelText, getByDisplayValue } = setup();
+    const passwordInput = getByLabelText(passwordInputLabel);
+
+    // Enter Text Into Passowrd Field
+    fireEvent.change(passwordInput, { target: { value: sampleUsername } });
+
+    // Expect text to be displayed
+    expect(getByDisplayValue(samplePassword));
   });
 });
