@@ -17,4 +17,4 @@ To run the application, from the root of the project enter the command: `yarn de
 From the root of the proejct,
 
 - To run all test suites `yarn test`
-  -To run in watch mode `yarn test --watch`
+- To run in watch mode `yarn test --watch`
