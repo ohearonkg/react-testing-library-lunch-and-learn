@@ -48,10 +48,10 @@ describe("Sign In Form", () => {
     const { getByLabelText, getByDisplayValue } = setup();
     const passwordInput = getByLabelText(passwordInputLabel);
 
-    // Enter Text Into Passowrd Field
+    // Enter Text Into Password Field
     fireEvent.change(passwordInput, { target: { value: samplePassword } });
 
-    // Expect text to be displayed
+    // Expect Text To Be Displayed
     expect(getByDisplayValue(samplePassword));
   });
 });
