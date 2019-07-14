@@ -1,6 +1,7 @@
 import React from "react";
 import { render, fireEvent } from "@testing-library/react";
 import SignInForm from "./";
+import { signInUser as mockSignInUser } from "../../api/signInUser";
 
 const usernameInputLabel = /username/i;
 const sampleUsername = "SAMPLEUSERNAME";
@@ -10,10 +11,7 @@ const samplePassword = "SAMPLEPASSWORD";
 
 const submitButtonText = /submit/i;
 
-const sampleOnSubmitFunction = jest.fn();
-
-const setup = () =>
-  render(<SignInForm onSubmitFunction={sampleOnSubmitFunction} />);
+const setup = () => render(<SignInForm />);
 
 describe("Sign In Form", () => {
   /**
@@ -61,9 +59,10 @@ describe("Sign In Form", () => {
   });
 
   /**
-   * Submitting The Form
+   * Should attempt to sign the user in once they
+   * have submitted the form
    */
-  it("Should allow the user to submit the form", () => {
+  it("Should attempt to sign in the user once they have submitted the form", () => {
     const { getByLabelText, getByText } = setup();
 
     // Items We Need
@@ -80,9 +79,7 @@ describe("Sign In Form", () => {
     // Click The Submit Button
     fireEvent.click(submitButton);
 
-    // Expectations
-    expect(sampleOnSubmitFunction).toHaveBeenCalledTimes(1);
-    expect(sampleOnSubmitFunction).toHaveBeenCalledWith({
+    expect(mockSignInUser).toHaveBeenCalledWith({
       username: sampleUsername,
       password: samplePassword
     });

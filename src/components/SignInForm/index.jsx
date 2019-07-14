@@ -1,12 +1,13 @@
 import React, { useState } from "react";
+import { signInUser } from "../../api/signInUser";
 
-const SignInForm = ({ onSubmitFunction }) => {
+const SignInForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
-    onSubmitFunction({ username, password });
+    const { id: userID } = await signInUser({ username, password });
   };
 
   return (
