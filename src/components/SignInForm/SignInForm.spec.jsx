@@ -8,7 +8,12 @@ const sampleUsername = "SAMPLEUSERNAME";
 const passwordInputLabel = /password/i;
 const samplePassword = "SAMPLEPASSWORD";
 
-const setup = () => render(<SignInForm />);
+const submitButtonText = /submit/i;
+
+const sampleOnSubmitFunction = jest.fn();
+
+const setup = () =>
+  render(<SignInForm onSubmitFunction={sampleOnSubmitFunction} />);
 
 describe("Sign In Form", () => {
   /**
@@ -26,10 +31,10 @@ describe("Sign In Form", () => {
     const { getByLabelText, getByDisplayValue } = setup();
     const usernameInput = getByLabelText(usernameInputLabel);
 
-    // Enter Text Into Userename Field
+    // Enter Text Into Username Field
     fireEvent.change(usernameInput, { target: { value: sampleUsername } });
 
-    // Expect text to be displayed
+    // Expect Text To Be Displayed
     expect(getByDisplayValue(sampleUsername));
   });
 
@@ -48,10 +53,38 @@ describe("Sign In Form", () => {
     const { getByLabelText, getByDisplayValue } = setup();
     const passwordInput = getByLabelText(passwordInputLabel);
 
-    // Enter Text Into Passowrd Field
+    // Enter Text Into Password Field
     fireEvent.change(passwordInput, { target: { value: samplePassword } });
 
-    // Expect text to be displayed
+    // Expect Text To Be Displayed
     expect(getByDisplayValue(samplePassword));
+  });
+
+  /**
+   * Submitting The Form
+   */
+  it("Should allow the user to submit the form", () => {
+    const { getByLabelText, getByText } = setup();
+
+    // Items We Need
+    const usernameInput = getByLabelText(usernameInputLabel);
+    const passwordInput = getByLabelText(passwordInputLabel);
+    const submitButton = getByText(submitButtonText);
+
+    // Enter Text Into Username Field
+    fireEvent.change(usernameInput, { target: { value: sampleUsername } });
+
+    // Enter Text Into Password Field
+    fireEvent.change(passwordInput, { target: { value: samplePassword } });
+
+    // Click The Submit Button
+    fireEvent.click(submitButton);
+
+    // Expectations
+    expect(sampleOnSubmitFunction).toHaveBeenCalledTimes(1);
+    expect(sampleOnSubmitFunction).toHaveBeenCalledWith({
+      username: sampleUsername,
+      password: samplePassword
+    });
   });
 });
