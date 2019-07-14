@@ -13,6 +13,12 @@ const submitButtonText = /submit/i;
 
 const setup = () => render(<SignInForm />);
 
+jest.mock("../../api/signInUser", () => {
+  return {
+    signInUser: jest.fn(() => Promise.resolve({ id: "123" }))
+  };
+});
+
 describe("Sign In Form", () => {
   /**
    * Finding Username Field
