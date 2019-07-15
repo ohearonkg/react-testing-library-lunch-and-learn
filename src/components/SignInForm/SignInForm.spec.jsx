@@ -109,7 +109,7 @@ describe("Sign In Form", () => {
    * It should redirect the user to their profile
    * page after sigin
    */
-  it.only("Should redirect the user to their profile page after login", async () => {
+  it("Should redirect the user to their profile page after login", async () => {
     const { getByLabelText, getByText, history } = setup();
 
     // Items We Need
