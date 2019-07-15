@@ -2,8 +2,6 @@ import React from "react";
 import { render, fireEvent, wait } from "@testing-library/react";
 import SignInForm from "./";
 import { signInUser as mockSignInUser } from "../../api/signInUser";
-import { Router } from "react-router-dom";
-import { createMemoryHistory } from "history";
 
 const usernameInputLabel = /username/i;
 const sampleUsername = "SAMPLEUSERNAME";
