@@ -21,7 +21,17 @@ jest.mock("../../api/signInUser", () => {
   };
 });
 
-const setup = () => render(<SignInForm />);
+const setup = ({ initialRoute = "/" } = {}) => {
+  const history = createMemoryHistory({ initialEntries: [initialRoute] });
+  return {
+    ...render(
+      <Router history={history}>
+        <SignInForm />
+      </Router>
+    ),
+    history
+  };
+};
 
 describe("Sign In Form", () => {
   /**
