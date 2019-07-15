@@ -1,7 +1,9 @@
 import React from "react";
-import { render, fireEvent } from "@testing-library/react";
+import { render, fireEvent, wait } from "@testing-library/react";
 import SignInForm from "./";
 import { signInUser as mockSignInUser } from "../../api/signInUser";
+import { Router } from "react-router-dom";
+import { createMemoryHistory } from "history";
 
 const usernameInputLabel = /username/i;
 const sampleUsername = "SAMPLEUSERNAME";
@@ -10,14 +12,16 @@ const passwordInputLabel = /password/i;
 const samplePassword = "SAMPLEPASSWORD";
 
 const submitButtonText = /submit/i;
-
-const setup = () => render(<SignInForm />);
+const sampleUserID = "123";
 
 jest.mock("../../api/signInUser", () => {
+  const sampleUserID = "123";
   return {
-    signInUser: jest.fn(() => Promise.resolve({ id: "123" }))
+    signInUser: jest.fn(() => Promise.resolve({ id: sampleUserID }))
   };
 });
+
+const setup = () => render(<SignInForm />);
 
 describe("Sign In Form", () => {
   /**
@@ -89,5 +93,31 @@ describe("Sign In Form", () => {
       username: sampleUsername,
       password: samplePassword
     });
+  });
+
+  /**
+   * It should redirect the user to their profile
+   * page after sigin
+   */
+  it.only("Should redirect the user to their profile page after login", async () => {
+    const { getByLabelText, getByText, history } = setup();
+
+    // Items We Need
+    const usernameInput = getByLabelText(usernameInputLabel);
+    const passwordInput = getByLabelText(passwordInputLabel);
+    const submitButton = getByText(submitButtonText);
+
+    // Enter Text Into Username Field
+    fireEvent.change(usernameInput, { target: { value: sampleUsername } });
+
+    // Enter Text Into Password Field
+    fireEvent.change(passwordInput, { target: { value: samplePassword } });
+
+    // Click The Submit Button
+    fireEvent.click(submitButton);
+
+    await wait(() => expect(history).toHaveLength(2));
+    expect(history.entries[1].pathname).toEqual(`/user/${sampleUserID}`);
+    expect(history.action).toEqual("PUSH");
   });
 });

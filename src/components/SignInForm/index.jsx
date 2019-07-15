@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import { signInUser } from "../../api/signInUser";
+import { withRouter } from "react-router-dom";
 
-const SignInForm = () => {
+const SignInForm = ({ history }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = async e => {
     e.preventDefault();
     const { id: userID } = await signInUser({ username, password });
+    history.push(`/user/${userID}`);
   };
 
   return (
@@ -35,4 +37,4 @@ const SignInForm = () => {
   );
 };
 
-export default SignInForm;
+export default withRouter(SignInForm);
